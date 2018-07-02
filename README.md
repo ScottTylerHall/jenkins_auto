@@ -89,7 +89,3 @@ Stop all the running containers
 docker stop $(docker ps -a -q)
 ```
 Stop Docker on your machine & restart it.
-
-Github Access Token (jenkins_test repo)
----------------------
-c2f4deed7e0ffeb79928f62a13f177349a064f8b
