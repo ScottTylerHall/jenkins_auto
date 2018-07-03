@@ -16,27 +16,27 @@
 // }
 
 pipeline {
-  agent any
-  stages {
-    stage('Build') {
-      steps {
-        sh 'make'
-      }
-    }
-    stage('Test') {
-      steps {
-        sh 'make run'
-      }
-    }
-    stage('Deploy') {
-      steps {
-        slackSend 'Completed Successfully'
-      }
-    }
-  }
-  post {
-    failure {
-      slackSend 'Unsuccessful'
-    }
-  }
+	agent any
+	stages {
+		stage('Build') {
+			steps {
+				sh 'make'
+			}
+		}
+		stage('Test') {
+			steps {
+				sh 'make run'
+			}
+		}
+		stage('Deploy') {
+			steps {
+				slackSend 'Completed Successfully'
+			}
+		}
+	}
+	post {
+		failure {
+			slackSend 'Unsuccessful'
+		}
+	}
 }
