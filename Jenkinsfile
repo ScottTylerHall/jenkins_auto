@@ -17,29 +17,26 @@
 
 pipeline {
   agent any
-  currentBuild.result = "SUCCESS"
-
-  try{
-    stages {
-      stage('Build') {
-        steps {
-          sh 'make'
-        }
-      }
-      stage('Test') {
-        steps {
-          sh 'make run'
-        }
-      }
-      stage('Deploy') {
-        steps {
-          slackSend 'Completed Successfully'
-        }
+  stages {
+    stage('Build') {
+      steps {
+        sh 'make'
       }
     }
-  }catch(err) {
-    currentBuild.result =  "FAILURE"
-    slackSend 'Unsuccessful'
-    throw err
+    stage('Test') {
+      steps {
+        sh 'make run'
+      }
+    }
+    stage('Deploy') {
+      steps {
+        slackSend 'Completed Successfully'
+      }
+    }
+  }
+  post {
+    failure {
+      slackSend 'Unsuccessful'
+    }
   }
 }
