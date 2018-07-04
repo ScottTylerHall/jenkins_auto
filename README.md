@@ -1,12 +1,12 @@
 # jenkins_test
 
-Run Jenkins on Docker
+1. Run Jenkins on Docker
 ---------------------
-Mount volume locally
+Mount volume locally on disk
 ```
-docker run --name jenkins -ti -p 8080:8080 -p 50000:50000 -v $PWD/jenkins:/var/jenkins_home:z -v /var/run/docker.sock:/var/run/docker.sock jenkinsci/blueocean:latest
+docker run --name jenkins -ti -p 8080:8080 -p 50000:50000 -v $PWD/jenkins:/var/jenkins_home:z -v /var/run/docker.sock:/var/run/docker.sock jenkins:latest
 ```
-Mount volume not locally
+Mount volume in Jenkins Container
 ```
 docker run --name jenkins -ti -p 8080:8080 -p 50000:50000 -v jenkins-data:/var/jenkins_home:z -v /var/run/docker.sock:/var/run/docker.sock jenkins:latest
 ```
@@ -16,24 +16,76 @@ Mounting Volume as Root User
 ```
 Produces annoying volume permission errors if volume not always run as root.
 
-Run Docker in Jenkins (Link Host Docker to Jenkins Container)
+2. Run Docker in Jenkins (Link Host Docker to Jenkins Container)
 ---------------------
+2.1 Login to the Jenkins container:
 ```
-https://getintodevops.com/blog/the-simple-way-to-run-docker-in-docker-for-ci
+docker exec -it -u root <docker-container-name> bash
 ```
-In Jenkins container run:
+
+2.2 Configure the official Docker apt repositories and install the latest Docker CE binaries:
+```
+apt-get update && \
+apt-get -y install apt-transport-https \
+     ca-certificates \
+     curl \
+     gnupg2 \
+     software-properties-common && \
+curl -fsSL https://download.docker.com/linux/$(. /etc/os-release; echo "$ID")/gpg > /tmp/dkey; apt-key add /tmp/dkey && \
+add-apt-repository \
+   "deb [arch=amd64] https://download.docker.com/linux/$(. /etc/os-release; echo "$ID") \
+   $(lsb_release -cs) \
+   stable" && \
+apt-get update && \
+apt-get -y install docker-ce
+```
+
+2.3 In Jenkins container run:
 ```
 chmod 777 /var/run/docker.sock
 ```
-Restart container afterwards.
 
-Update Jenkins on Docker
+2.4 Restart container afterwards.
+
+Steps obtained from:
+https://getintodevops.com/blog/the-simple-way-to-run-docker-in-docker-for-ci
+
+3. Update Jenkins on Docker
 ---------------------
+3.1 Login to Jenkins container:
+```
+docker container exec -u 0 -it jenkins bash
+```
+
+3.2 Download the required update:
+```
+wget http://updates.jenkins-ci.org/download/war/2.89.2/jenkins.war
+```
+
+3.3 Move the downloaded file to the correct location:
+```
+mv ./jenkins.war /usr/share/jenkins
+```
+
+3.4 Change permissions on the downloaded file:
+```
+chmod 777 /usr/share/jenkins/jenkins.war
+```
+
+3.5 Exit and restart the container:
+```
+# exit contaienr (inside container)
+exit
+# restart container (from your server)
+docker container restart jenkins
+```
+
+Steps obtained from:
 ```
 https://medium.com/@jimkang/how-to-start-a-new-jenkins-container-and-update-jenkins-with-docker-cf628aa495e9
 ```
 
-Build Project After Each Commit
+Build Project After Each Commit (Github Webhook)
 ---------------------
 ```
 https://youtu.be/Z3S2gMBUkBo
@@ -92,7 +144,7 @@ pipeline {
 }
 ```
 
-If the Port Never Closed Properly
+If the Port Never Closed Properly on Restart
 ---------------------
 Stop all the running containers 
 ```
