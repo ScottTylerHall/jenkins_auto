@@ -6,11 +6,11 @@ Mount volume locally on disk
 ```
 docker run --name jenkins -ti -p 8080:8080 -p 50000:50000 -v $PWD/jenkins:/var/jenkins_home:z -v /var/run/docker.sock:/var/run/docker.sock jenkins:latest
 ```
-Mount volume in Jenkins Container
+Mount volume in Jenkins container
 ```
 docker run --name jenkins -ti -p 8080:8080 -p 50000:50000 -v jenkins-data:/var/jenkins_home:z -v /var/run/docker.sock:/var/run/docker.sock jenkins:latest
 ```
-Mounting Volume as Root User
+Mounting volume as root user
 ```
 -u root
 ```
@@ -54,12 +54,12 @@ https://getintodevops.com/blog/the-simple-way-to-run-docker-in-docker-for-ci
 ---------------------
 3.1 Login to Jenkins container:
 ```
-docker container exec -u 0 -it jenkins bash
+docker container exec -u 0 -it <docker-container-name> bash
 ```
 
-3.2 Download the required update:
+3.2 Download the required update (Replace 2.121.1 with the required version):
 ```
-wget http://updates.jenkins-ci.org/download/war/2.89.2/jenkins.war
+wget http://updates.jenkins-ci.org/download/war/2.121.1/jenkins.war
 ```
 
 3.3 Move the downloaded file to the correct location:
