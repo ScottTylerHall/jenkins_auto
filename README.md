@@ -1,6 +1,6 @@
 # jenkins_test
 
-1. Run Jenkins on Docker
+1 Run Jenkins on Docker
 ---------------------
 Mount volume locally on disk
 ```
@@ -16,7 +16,7 @@ Mounting volume as root user
 ```
 Produces annoying volume permission errors if volume not always run as root.
 
-2. Run Docker in Jenkins (Link Host Docker to Jenkins Container)
+2 Run Docker in Jenkins (Link Host Docker to Jenkins Container)
 ---------------------
 2.1 Login to the Jenkins container:
 ```
@@ -50,7 +50,7 @@ chmod 777 /var/run/docker.sock
 Steps obtained from:
 https://getintodevops.com/blog/the-simple-way-to-run-docker-in-docker-for-ci
 
-3. Update Jenkins on Docker
+3 Update Jenkins on Docker
 ---------------------
 3.1 Login to Jenkins container:
 ```
