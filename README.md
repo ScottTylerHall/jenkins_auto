@@ -151,3 +151,24 @@ Stop all the running containers
 docker stop $(docker ps -a -q)
 ```
 Stop Docker on your machine & restart it.
+
+
+NOTES
+---------------------
+1 Currently having the problem whereby the Jenkins images are for Linux containers and then I do not know of a way to compile a Visual Studio project with the MSBuild.exe in the Linux container which hosts Jenkins. On Jenkins I installed the MSBuild plugin which allows me to in Manage Jenkins->Configure Global Tools select a MSBuild Compiler. Although after succesfully mounting the windows host MSBuild.exe to the Linux container, I still cannot use the MSBuild.exe as there are dependancy issues.
+
+2 The Next step was to try and create a Windows Image whereby I would pre-install the MSBuild dependancies on the Windows container and install Jenkins on that Image. This should allow me through the MSBuild plugin to link the MSBuild.exe
+
+3 I tried to use these two tutorials in order to combine them and have a Windows container running Jenkins with the MSBuild.exe installed on the container. I attempted to take the Dockerfile used to install Jenkins on the Windows container and then use the other docker file to install the MSBuild.exe on that image.
+```
+https://blog.alexellis.io/3-steps-to-msbuild-with-docker/
+https://blog.alexellis.io/continuous-integration-docker-windows-containers/
+```
+
+4 If this fails Jenkins might have to be installed locally without the use of Docker just so that the MSBuild.exe can be accessed easier through the MSBuild plugin. Lol why is this like this? This can be done using this tutorial.
+Setup Jenkins Without Docker
+---------------------
+```
+http://www.andyfrench.info/2015/03/getting-started-with-jenkins-git-and.html
+```
+Currently ran commands up to installing jenkins on the image need to install MSBuild
