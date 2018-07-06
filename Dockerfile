@@ -1,11 +1,12 @@
-FROM jenkins:1.596
+# escape=`
+FROM microsoft/windowsservercore
 
-USER root
-RUN apt-get update \
-      && apt-get install -y sudo \
-      && rm -rf /var/lib/apt/lists/*
-RUN echo "jenkins ALL=NOPASSWD: ALL" >> /etc/sudoers
+RUN powershell -Command `
+    wget 'http://javadl.oracle.com/webapps/download/AutoDL?BundleId=210185' -Outfile 'C:\jreinstaller.exe' ; `
+    Start-Process -filepath C:\jreinstaller.exe -passthru -wait -argumentlist "/s,INSTALLDIR=c:\Java\jre1.8.0_91" ; `
+    del C:\jreinstaller.exe
 
-USER jenkins
-COPY plugins.txt /usr/share/jenkins/plugins.txt
-RUN /usr/local/bin/plugins.sh /usr/share/jenkins/plugins.txt
+ENV JAVA_HOME c:\\Java\\jre1.8.0_91
+RUN setx PATH %PATH%;%JAVA_HOME%\bin
+
+CMD [ "java.exe" ]
