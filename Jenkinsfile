@@ -21,6 +21,7 @@ pipeline {
 		stage('Build') {
 			steps {
 				  echo 'Building..'
+				  bat "\"${tool 'MSBuild'}\" WindowsFormsApp1/WindowsFormsApp1/WindowsFormsApp1.sln"
 			}
 		}
 		stage('Test') {
