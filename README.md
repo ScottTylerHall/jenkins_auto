@@ -177,6 +177,8 @@ https://blog.alexellis.io/3-steps-to-msbuild-with-docker/
 
 Setup Jenkins Without Docker
 ---------------------
+This tutorial works perfectly 
 ```
 http://www.andyfrench.info/2015/03/getting-started-with-jenkins-git-and.html
+Press the Windows+R keys to open the Run dialog, type services.msc in order to start Jenkins server.
 ```
