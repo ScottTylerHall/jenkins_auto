@@ -1,5 +1,7 @@
 # jenkins_test
 
+Disclaimer: Steps 1-3 work perfectly up until 4 where I try to compile a Visual Studio project that is on github, although I cannot get the MSBuild executable to work on the .sln to compile. Although the tutorial towards the bottom installs Jenkins locally on Windows without Docker and then it works perfectly with the Jenkinsfile to compile the .sln.
+
 1 Run Jenkins on Docker
 ---------------------
 Mount volume locally on disk
