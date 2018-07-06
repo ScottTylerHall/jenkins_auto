@@ -121,6 +121,7 @@ pipeline {
         stage('Build') {
             steps {
                 echo 'Building..'
+                bat "\"${tool 'MSBuild'}\" WindowsFormsApp1/WindowsFormsApp1/WindowsFormsApp1.sln"
             }
         }
         stage('Test') {
@@ -132,6 +133,12 @@ pipeline {
             steps {
                 echo 'Deploying....'
             }
+        }
+    }
+    post { // The post always happend can set different resons for it to occur such as failure, success, etc..
+    // more can be found on the jenkins website.
+        failure {
+            echo 'Unsuccessful'
         }
     }
 }
