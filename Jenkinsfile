@@ -20,23 +20,23 @@ pipeline {
 	stages {
 		stage('Build') {
 			steps {
-				bash 'make'
+				  echo 'Building..'
 			}
 		}
 		stage('Test') {
 			steps {
-				bash 'make run'
+				 echo 'Testing..'
 			}
 		}
 		stage('Deploy') {
 			steps {
-				bash 'Completed Successfully'
+				 echo 'Deploying..'
 			}
 		}
 	}
 	post {
 		failure {
-			bash 'Unsuccessful'
+			echo 'Unsuccessful'
 		}
 	}
 }
