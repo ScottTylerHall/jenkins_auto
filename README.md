@@ -85,6 +85,8 @@ Steps obtained from:
 https://medium.com/@jimkang/how-to-start-a-new-jenkins-container-and-update-jenkins-with-docker-cf628aa495e9
 ```
 
+4 How to use MSBuild with Jenkins on a Linux container?
+Currently working on this
 Build Project After Each Commit (Github Webhook)
 ---------------------
 ```
@@ -161,14 +163,20 @@ NOTES
 
 3 I tried to use these two tutorials in order to combine them and have a Windows container running Jenkins with the MSBuild.exe installed on the container. I attempted to take the Dockerfile used to install Jenkins on the Windows container and then use the other docker file to install the MSBuild.exe on that image.
 ```
-https://blog.alexellis.io/3-steps-to-msbuild-with-docker/
 https://blog.alexellis.io/continuous-integration-docker-windows-containers/
+https://blog.alexellis.io/3-steps-to-msbuild-with-docker/
 ```
+3.1 First use the first 2 Dockerfile's from this:
+ https://blog.alexellis.io/continuous-integration-docker-windows-containers/ 
+ tutorial to set up JRE and Jenkins on the Windows image and then using the first Dockerfile from this: https://blog.alexellis.io/3-steps-to-msbuild-with-docker/ 
+ tutorial in order to install MSBuild on the image. Then you should have an image that can be ran with this command:
+ ```
+ docker run --name jenkinsci -p 8080:8080 -p 50000:50000 -d jenkins-windows-msbuild:2.130
+ ```
+4 If this fails Jenkins might have to be installed locally without the use of Docker just so that the MSBuild.exe can be accessed easier through the MSBuild plugin. Lol why is this like this? This can then be done using this tutorial.
 
-4 If this fails Jenkins might have to be installed locally without the use of Docker just so that the MSBuild.exe can be accessed easier through the MSBuild plugin. Lol why is this like this? This can be done using this tutorial.
 Setup Jenkins Without Docker
 ---------------------
 ```
 http://www.andyfrench.info/2015/03/getting-started-with-jenkins-git-and.html
 ```
-Currently ran commands up to installing jenkins on the image need to install MSBuild
