@@ -93,24 +93,6 @@ Build Project After Each Commit (Github Webhook)
 https://youtu.be/Z3S2gMBUkBo
 ```
 
-SCM (Source Control Management) 
----------------------
-```
-https://jenkins.io/doc/book/pipeline/getting-started/#defining-a-pipeline-in-scm
-```
-
-EXTRA
-View Volume Contents of Docker Container Image
----------------------
-Accessing Jenkins home directory
-```
-docker exec -it -u root <docker-container-name> bash
-```
-Docker container name retrieved by
-```
-docker ps -a
-```
-
 Accessing the Jenkins Console Log Through Docker Logs
 ---------------------
 View the logs to retrieve the initialAdminPassword.
@@ -120,9 +102,18 @@ when Unlocking Jenkins as part of the Post-installation setup wizard.
 docker logs <docker-container-name>
 ```
 
+SCM (Source Control Management) 
+---------------------
+These steps show how a Jenkinsfile which is saved in the reposirtory can be used for creating a pipeline.
+```
+https://jenkins.io/doc/book/pipeline/getting-started/#defining-a-pipeline-in-scm
+```
+The general pipeline structure for the pipeline is shown next.
+
 General Pipeline Structure
 ---------------------
-Jenkinsfile (Declarative Pipeline)
+When using a pipleline a Jenkinsfile can be created in the repository by pointing the new job to the Jenkinsfile location in the repository. The Jenkinsfile will contain code of the following format (Groovy Syntax):
+Jenkinsfile (Declarative Pipeline). The jenkins website has examples on the meaning of all the stages and steps and what and agent is. The agents can be seen under the build executor status tab when you start up Jenkins.
 ```
 pipeline {
     agent any
@@ -169,16 +160,32 @@ https://blog.alexellis.io/3-steps-to-msbuild-with-docker/
 3.1 First use the first 2 Dockerfile's from this:
  https://blog.alexellis.io/continuous-integration-docker-windows-containers/ 
  tutorial to set up JRE and Jenkins on the Windows image and then using the first Dockerfile from this: https://blog.alexellis.io/3-steps-to-msbuild-with-docker/ 
- tutorial in order to install MSBuild on the image. Then you should have an image that can be ran with this command:
+ tutorial in order to install MSBuild on the image. Then you should have an image that can be run with this command:
  ```
  docker run --name jenkinsci -p 8080:8080 -p 50000:50000 -d jenkins-windows-msbuild:2.130
  ```
-4 If this fails Jenkins might have to be installed locally without the use of Docker just so that the MSBuild.exe can be accessed easier through the MSBuild plugin. Lol why is this like this? This can then be done using this tutorial.
+4 If this fails (This did fail, for some reason some of the paths could not  be found) Jenkins might have to be installed locally without the use of Docker just so that the MSBuild.exe can be accessed easier through the MSBuild plugin. Lol why is this like this? This can then be done using this tutorial.
 
 Setup Jenkins Without Docker
 ---------------------
-This tutorial works perfectly 
+This tutorial works perfectly, although with the downside of not having Jenkins in docker.
 ```
 http://www.andyfrench.info/2015/03/getting-started-with-jenkins-git-and.html
 Press the Windows+R keys to open the Run dialog, type services.msc in order to start Jenkins server.
+```
+
+Blue Ocean Plugin
+---------------------
+I suggest that this plugin be used for creating pipelines as it has a very user friendly interface that allows the user to create simple pipelines. Pipelines can also be edited and graphically and STEPS can be added in the various STAGES easily. Blue Ocean will also automatically save a Jenkinsfile to the repository or use an already implemented Jenkinsfile to create a pipeline.
+
+EXTRA
+View Volume Contents of Docker Container Image
+---------------------
+Accessing Jenkins home directory
+```
+docker exec -it -u root <docker-container-name> bash
+```
+Docker container name retrieved by
+```
+docker ps -a
 ```

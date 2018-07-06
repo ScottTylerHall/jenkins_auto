@@ -20,23 +20,23 @@ pipeline {
 	stages {
 		stage('Build') {
 			steps {
-				sh 'make'
+				bash 'make'
 			}
 		}
 		stage('Test') {
 			steps {
-				sh 'make run'
+				bash 'make run'
 			}
 		}
 		stage('Deploy') {
 			steps {
-				slackSend 'Completed Successfully'
+				bash 'Completed Successfully'
 			}
 		}
 	}
 	post {
 		failure {
-			slackSend 'Unsuccessful'
+			bash 'Unsuccessful'
 		}
 	}
 }
